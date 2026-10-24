@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PatchTimeChallengeManifestV1",
+  "type": "object",
+  "required": ["id", "schema_version", "metadata", "problem_statement", "environment", "evaluation"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{2,63}$"
+    },
+    "schema_version": {
+      "type": "string",
+      "enum": ["1.0.0"]
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["source_repo", "language", "runtime_version", "created_at", "difficulty"],
+      "properties": {
+        "source_repo": { "type": "string" },
+        "language": { "type": "string" },
+        "runtime_version": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "provenance": {
+          "type": "object",
+          "required": ["base_commit"],
+          "properties": {
+            "base_commit": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "reference_commit_hash": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+            "issue_reference": { "type": "string" }
+          }
+        }
+      }
+    },
+    "problem_statement": {
+      "type": "object",
+      "required": ["title", "description"],
+      "properties": {
+        "title": { "type": "string", "minLength": 5 },
+        "description": { "type": "string", "minLength": 20 }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["type", "install_command", "resource_limits"],
+      "properties": {
+        "type": { "type": "string" },
+        "dependencies_file": { "type": "string" },
+        "install_command": { "type": "string" },
+        "resource_limits": {
+          "type": "object",
+          "required": ["timeout_seconds", "max_memory_mb", "max_cpu_cores"],
+          "properties": {
+            "timeout_seconds": { "type": "integer", "minimum": 10, "maximum": 3600 },
+            "max_memory_mb": { "type": "integer", "minimum": 256, "maximum": 32768 },
+            "max_cpu_cores": { "type": "integer", "minimum": 1, "maximum": 32 }
+          }
+        }
+      }
+    },
+    "evaluation": {
+      "type": "object",
+      "required": ["fail_to_pass_tests", "pass_to_pass_tests", "test_command"],
+      "properties": {
+        "visible_tests": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "fail_to_pass_tests": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "pass_to_pass_tests": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "test_command": { "type": "string" }
+      }
+    }
+  }
+}
+

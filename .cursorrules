@@ -1,0 +1,18 @@
+# Cursor & Kiro System Rules — PatchTime Development
+
+You are an expert AI software architect and systems engineer working on the PatchTime codebase.
+
+## Core Directives
+1. **Language & Stack:** Python 3.12+ exclusively. Always use strict type annotations (`typing`), `dataclasses(frozen=True)` for data models, and `pathlib.Path` for file handling.
+2. **Security & Sandboxing:** Never use `shell=True` in subprocesses. Always sanitize arguments into a list of strings (`["cmd", "arg"]`). Enforce path validation with `Path.resolve()` to prevent directory traversal.
+3. **Operational Context:** The project has an operational manual in `AGENT.md` and 8 specialized skills in `.opencode/skills/`. Always refer to the matching skill when working on:
+   - Git mining -> `.opencode/skills/patchtime-repo-forensics/SKILL.md`
+   - Challenge schema -> `.opencode/skills/patchtime-challenge-authoring/SKILL.md`
+   - Git snapshots -> `.opencode/skills/patchtime-snapshot-reconstruction/SKILL.md`
+   - Sandboxing & quotas -> `.opencode/skills/patchtime-sandbox-security/SKILL.md`
+   - Behavioral test eval -> `.opencode/skills/patchtime-evaluation-integrity/SKILL.md`
+   - Agent runners -> `.opencode/skills/patchtime-agent-adapter/SKILL.md`
+   - Benchmark matrices -> `.opencode/skills/patchtime-benchmark-experiments/SKILL.md`
+   - PatchTime tests -> `.opencode/skills/patchtime-test-engineering/SKILL.md`
+4. **Testing Command:** Always verify changes by running `python -m unittest discover -s tests -p "test_*.py"`.
+5. **No Hallucinations:** Never claim tests passed without running them and inspecting real output.

@@ -1,0 +1,14 @@
+---
+description: PatchTime Architecture and Operational Rules
+globs: **/*
+alwaysApply: true
+---
+
+# PatchTime Core Rules for Cursor & Kiro
+
+- **Python Version:** 3.12+ (Strict typing, no untyped functions).
+- **Subprocess Security:** Always use `shell=False`, pass arguments as lists, and enforce `timeout`.
+- **Path Traversal Prevention:** Always validate that target paths resolve within the designated workspace root.
+- **Diagnostics:** Use `python -m patchtime.cli.main doctor` to check host capabilities.
+- **Skills Directory:** Specialized procedure manuals are located in `.opencode/skills/`. Read the relevant `SKILL.md` before making architectural changes.
+- **Unit Testing:** Run `python -m unittest discover -s tests -p "test_*.py"` to verify changes.

@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PatchTimeRunManifestSpec",
+  "type": "object",
+  "required": [
+    "run_id",
+    "challenge_id",
+    "agent_name",
+    "patchtime_version",
+    "start_time",
+    "end_time",
+    "status",
+    "verdict"
+  ],
+  "properties": {
+    "run_id": { "type": "string" },
+    "challenge_id": { "type": "string" },
+    "agent_name": { "type": "string" },
+    "agent_version": { "type": "string" },
+    "patchtime_version": { "type": "string" },
+    "isolation_mode": { "type": "string", "enum": ["container", "local_process"] },
+    "start_time": { "type": "string", "format": "date-time" },
+    "end_time": { "type": "string", "format": "date-time" },
+    "status": {
+      "type": "string",
+      "enum": ["COMPLETED", "TIMEOUT", "INFRA_ERROR", "ABORTED"]
+    },
+    "verdict": {
+      "type": "object",
+      "required": ["status", "is_resolved", "execution_time_seconds"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["RESOLVED", "PARTIAL_FIX", "REGRESSION", "FAILED", "ERROR"]
+        },
+        "is_resolved": { "type": "boolean" },
+        "execution_time_seconds": { "type": "number" }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "properties": {
+        "total_tokens": { "type": "integer" },
+        "cost_usd": { "type": "number" },
+        "modified_files_count": { "type": "integer" }
+      }
+    }
+  }
+}
+

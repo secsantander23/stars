@@ -1,0 +1,43 @@
+{
+  "id": "py-sample-calc-001",
+  "schema_version": "1.0.0",
+  "metadata": {
+    "source_repo": "https://github.com/example/math-calc",
+    "language": "python",
+    "runtime_version": "3.12",
+    "created_at": "2026-10-24T12:00:00Z",
+    "difficulty": "easy",
+    "provenance": {
+      "base_commit": "1234567890abcdef1234567890abcdef12345678",
+      "issue_reference": "https://github.com/example/math-calc/issues/42"
+    }
+  },
+  "problem_statement": {
+    "title": "Division by zero raises unhandled ZeroDivisionError instead of returning NaN",
+    "description": "When invoking safe_divide(x, 0), the calculator currently allows Python's native ZeroDivisionError to bubble up. The function must catch division by zero and return math.nan while logging a warning."
+  },
+  "environment": {
+    "type": "python",
+    "dependencies_file": "requirements.txt",
+    "install_command": "pip install -r requirements.txt",
+    "resource_limits": {
+      "timeout_seconds": 180,
+      "max_memory_mb": 1024,
+      "max_cpu_cores": 1
+    }
+  },
+  "evaluation": {
+    "visible_tests": [
+      "tests/test_basic_arithmetic.py"
+    ],
+    "fail_to_pass_tests": [
+      "tests/test_safe_division.py::test_division_by_zero_returns_nan"
+    ],
+    "pass_to_pass_tests": [
+      "tests/test_basic_arithmetic.py",
+      "tests/test_multiplication.py"
+    ],
+    "test_command": "pytest {test_target}"
+  }
+}
+
